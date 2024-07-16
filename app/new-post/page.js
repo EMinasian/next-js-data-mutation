@@ -5,12 +5,12 @@ import ButtonSection from "./ButtonSection";
 export default function NewPostPage() {
   async function createPost(formData) {
     "use server";
-    await new Promise((resolve) => setTimeout(resolve, 2 * 1000)); // for learning purposes
+    
     const title = formData.get("title");
     const image = formData.get("image");
     const content = formData.get("content");
 
-    storePost({
+    await storePost({
       imageUrl: "",
       title,
       content,
