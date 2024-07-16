@@ -1,21 +1,23 @@
-import { storePost } from '@/lib/posts';
-import { redirect } from 'next/navigation'
+import { storePost } from "@/lib/posts";
+import { redirect } from "next/navigation";
+import ButtonSection from "./ButtonSection";
 
 export default function NewPostPage() {
   async function createPost(formData) {
     "use server";
-    const title = formData.get('title');
-    const image = formData.get('image');
-    const content = formData.get('content');
+    await new Promise((resolve) => setTimeout(resolve, 2 * 1000)); // for learning purposes
+    const title = formData.get("title");
+    const image = formData.get("image");
+    const content = formData.get("content");
 
     storePost({
-      imageUrl: '',
+      imageUrl: "",
       title,
       content,
-      userId: 1
-    })
+      userId: 1,
+    });
 
-    redirect('/feed')
+    redirect("/feed");
   }
 
   return (
@@ -39,10 +41,7 @@ export default function NewPostPage() {
           <label htmlFor="content">Content</label>
           <textarea id="content" name="content" rows="5" />
         </p>
-        <p className="form-actions">
-          <button type="reset">Reset</button>
-          <button>Create Post</button>
-        </p>
+        <ButtonSection />
       </form>
     </>
   );
