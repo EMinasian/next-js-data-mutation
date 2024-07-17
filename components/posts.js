@@ -1,17 +1,15 @@
 import { formatDate } from "@/lib/format";
 import LikeButton from "./like-icon";
 import { updatePostLikeStatus } from "@/lib/posts";
-
-
+import { revalidatePath } from "next/cache";
 
 function Post({ post }) {
-
   async function likePost(postId) {
-    "use server"
-    await updatePostLikeStatus(postId, 2)
+    "use server";
+    await updatePostLikeStatus(postId, 2);
+    revalidatePath("/", "layout");
   }
-
-  console.log('isLiked', post.isLiked)
+  
 
   return (
     <article className="post">
@@ -30,7 +28,10 @@ function Post({ post }) {
             </p>
           </div>
           <div>
-            <form action={likePost.bind(null, post.id)} className={post.isLiked ? 'liked' : ''}>
+            <form
+              action={likePost.bind(null, post.id)}
+              className={post.isLiked ? "liked" : ""}
+            >
               <LikeButton />
             </form>
           </div>
