@@ -2,6 +2,7 @@
 import { storePost } from "@/lib/posts";
 import { redirect } from "next/navigation";
 import { uploadImage } from "@/lib/cloudinary";
+import { revalidatePath } from "next/cache";
 
 export async function createPost(currentState, formData) {
   const title = formData.get("title");
@@ -28,5 +29,6 @@ export async function createPost(currentState, formData) {
     userId: 1,
   });
 
+  revalidatePath("/", "layout");
   redirect("/feed");
 }
